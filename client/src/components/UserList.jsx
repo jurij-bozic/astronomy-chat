@@ -99,17 +99,42 @@ const UserList = ({ setSelectedUsers }) => {
         )
     }
 
-    return (
-        <ListContainer>
-            {loading ? <div className="user-list__message">
-                Loading users...
-            </div> : (
-                users?.map((user, i) => (
-                  <UserItem index={i} key={user.id} user={user} setSelectedUsers={setSelectedUsers} />  
-                ))
-            )}
-        </ListContainer>
-    )
+    if(loading) {
+        return (
+            <ListContainer>
+                    <div className="user-list__message">
+                        Loading users...
+                    </div> 
+            </ListContainer>
+        )
+    }
+    else {
+        return (
+            <ListContainer>
+               
+           
+                    {users?.map((user, i) => (
+                      <UserItem index={i} key={user.id} user={user} setSelectedUsers={setSelectedUsers} />  
+                    ))}
+                    
+            </ListContainer>
+        )
+    }
+
+    // return (
+    //     <ListContainer>
+    //         {loading ? 
+    //             <div className="user-list__message">
+    //                 Loading users...
+    //             </div> 
+    //             : (
+    //             users?.map((user, i) => (
+    //               <UserItem index={i} key={user.id} user={user} setSelectedUsers={setSelectedUsers} />  
+    //             ))
+    //             document.get
+    //         )}
+    //     </ListContainer>
+    // )
 }
 
 export default UserList;

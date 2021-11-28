@@ -16,6 +16,7 @@ const initialState = {
 const AuthLogin = () => {
     const [form, setForm] = useState(initialState);
     const [isSignup, setIsSignup] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const formChangeHandler = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -23,6 +24,7 @@ const AuthLogin = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
 
         const { username, password, phoneNumber, avatarURL } = form;
 
@@ -35,6 +37,8 @@ const AuthLogin = () => {
             phoneNumber, 
             avatarURL,
         });
+
+        setIsLoading(false);
 
         cookies.set('token', token);
         cookies.set('username', username);
@@ -60,87 +64,93 @@ const AuthLogin = () => {
                 <div className="auth-login-container-inputs-content">
                     <p>Astronomy Chat App</p>
                     <p>{isSignup ? 'Sign Up' : 'Sign In'}</p>
-                    <form onSubmit={handleSubmit} style={{ maxWidth: '620px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        {isSignup && (
-                            <div className="auth-login-container-inputs-content_input">
-                                <label htmlFor="fullName">Full Name</label>
-                                <input 
-                                    style={{ width: '100%' }}
-                                    name="fullName" 
-                                    type="text"
-                                    placeholder="Full Name"
-                                    onChange={formChangeHandler}
-                                    required
-                                />
-                            </div>
-                        )}
-                        <div className="auth-login-container-inputs-content_input">
-                            <label htmlFor="username">Username</label>
-                                <input 
-                                    id='username-input'
-                                    style={{ width: '100%' }}
-                                    name="username" 
-                                    type="text"
-                                    placeholder="Username"
-                                    onChange={formChangeHandler}
-                                    required
-                                />
-                            </div>
-                        {isSignup && (
-                            <div className="auth-login-container-inputs-content_input">
-                                <label htmlFor="phoneNumber">Phone Number</label>
-                                <input 
-                                  style={{ width: '100%' }}
-                                    name="phoneNumber" 
-                                    type="text"
-                                    placeholder="Phone Number"
-                                    onChange={formChangeHandler}
-                                    required
-                                />
-                            </div>
-                        )}
-                        {isSignup && (
-                            <div className="auth-login-container-inputs-content_input">
-                                <label htmlFor="avatarURL">Avatar URL</label>
-                                <input 
-                                    style={{ width: '100%' }}
-                                    name="avatarURL" 
-                                    type="text"
-                                    placeholder="Avatar URL"
-                                    onChange={formChangeHandler}
-                                    required
-                                />
-                            </div>
-                        )}
-                        <div className="auth-login-container-inputs-content_input">
-                                <label htmlFor="password">Password</label>
-                                <input 
-                                    id='pass-input'
-                                    style={{ width: '100%' }}
-                                    name="password" 
-                                    type="password"
-                                    placeholder="Password"
-                                    onChange={formChangeHandler}
-                                    required
-                                />
-                            </div>
-                        {isSignup && (
-                            <div className="auth-login-container-inputs-content_input">
-                                <label htmlFor="confirmPassword">Confirm Password</label>
-                                <input 
-                                    style={{ width: '100%' }}
-                                    name="confirmPassword" 
-                                    type="password"
-                                    placeholder="Confirm Password"
-                                    onChange={formChangeHandler}
-                                    required
-                                />
-                            </div>
+                    {!isLoading ? 
+                        <form onSubmit={handleSubmit} style={{ maxWidth: '620px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            {isSignup && (
+                                <div className="auth-login-container-inputs-content_input">
+                                    <label htmlFor="fullName">Full Name</label>
+                                    <input 
+                                        style={{ width: '100%' }}
+                                        name="fullName" 
+                                        type="text"
+                                        placeholder="Full Name"
+                                        onChange={formChangeHandler}
+                                        required
+                                    />
+                                </div>
                             )}
-                        <div className="auth-login-container-inputs-content_button">
-                            <button style={{ backgroundColor: '#6c6bac', border: 'none' }}>{isSignup ? "Sign up" : "Sign in"}</button>
-                        </div>
-                    </form>
+                            <div className="auth-login-container-inputs-content_input">
+                                <label htmlFor="username">Username</label>
+                                    <input 
+                                        id='username-input'
+                                        style={{ width: '100%' }}
+                                        name="username" 
+                                        type="text"
+                                        placeholder="Username"
+                                        onChange={formChangeHandler}
+                                        required
+                                    />
+                                </div>
+                            {isSignup && (
+                                <div className="auth-login-container-inputs-content_input">
+                                    <label htmlFor="phoneNumber">Phone Number</label>
+                                    <input 
+                                    style={{ width: '100%' }}
+                                        name="phoneNumber" 
+                                        type="text"
+                                        placeholder="Phone Number"
+                                        onChange={formChangeHandler}
+                                        required
+                                    />
+                                </div>
+                            )}
+                            {isSignup && (
+                                <div className="auth-login-container-inputs-content_input">
+                                    <label htmlFor="avatarURL">Avatar URL</label>
+                                    <input 
+                                        style={{ width: '100%' }}
+                                        name="avatarURL" 
+                                        type="text"
+                                        placeholder="Avatar URL"
+                                        onChange={formChangeHandler}
+                                        required
+                                    />
+                                </div>
+                            )}
+                            <div className="auth-login-container-inputs-content_input">
+                                    <label htmlFor="password">Password</label>
+                                    <input 
+                                        id='pass-input'
+                                        style={{ width: '100%' }}
+                                        name="password" 
+                                        type="password"
+                                        placeholder="Password"
+                                        onChange={formChangeHandler}
+                                        required
+                                    />
+                                </div>
+                            {isSignup && (
+                                <div className="auth-login-container-inputs-content_input">
+                                    <label htmlFor="confirmPassword">Confirm Password</label>
+                                    <input 
+                                        style={{ width: '100%' }}
+                                        name="confirmPassword" 
+                                        type="password"
+                                        placeholder="Confirm Password"
+                                        onChange={formChangeHandler}
+                                        required
+                                    />
+                                </div>
+                                )}
+                            <div className="auth-login-container-inputs-content_button">
+                                <button style={{ backgroundColor: '#6c6bac', border: 'none' }}>{isSignup ? "Sign up" : "Sign in"}</button>
+                            </div>
+                        </form>
+                    :
+                    <div>
+                        <em>loading . . .</em>
+                    </div>
+                    }
                     <div className="auth-login-container-inputs-content_button">
                             <button style={{ backgroundColor: '#966887', border: 'none' }} onClick={() => {
                                 //used only for demo purposes
